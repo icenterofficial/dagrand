@@ -1,22 +1,21 @@
 
 import React from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { LanguageProvider } from './context/LanguageContext';
-import { ArticleProvider } from './context/ArticleContext';
-import { AuthProvider } from './context/AuthContext'; // Import AuthProvider
-import Layout from './components/Layout';
-import Home from './pages/Home';
-import About from './pages/About';
-import Team from './pages/Team';
-import PracticeList from './pages/PracticeList';
-import PracticeDetail from './pages/PracticeDetail';
-import Updates from './pages/Updates';
-import UpdateDetail from './pages/UpdateDetail';
-import Contact from './pages/Contact';
-import Admin from './pages/Admin';
-import NotFound from './pages/NotFound';
+import { LanguageProvider } from './context/LanguageContext.tsx';
+import { ArticleProvider } from './context/ArticleContext.tsx';
+import { AuthProvider } from './context/AuthContext.tsx';
+import Layout from './components/Layout.tsx';
+import Home from './pages/Home.tsx';
+import About from './pages/About.tsx';
+import Team from './pages/Team.tsx';
+import PracticeList from './pages/PracticeList.tsx';
+import PracticeDetail from './pages/PracticeDetail.tsx';
+import Updates from './pages/Updates.tsx';
+import UpdateDetail from './pages/UpdateDetail.tsx';
+import Contact from './pages/Contact.tsx';
+import Admin from './pages/Admin.tsx';
+import NotFound from './pages/NotFound.tsx';
 
-// ScrollToTop component to handle scroll on navigation
 const ScrollToTop = () => {
     const { pathname } = useLocation();
   
@@ -44,10 +43,8 @@ const App = () => {
                 <Route path="updates" element={<Updates />} />
                 <Route path="updates/:id" element={<UpdateDetail />} />
                 <Route path="contact" element={<Contact />} />
-                {/* 404 Route - Must be last inside Layout to inherit nav/footer, or outside if you want a clean page */}
                 <Route path="*" element={<NotFound />} />
               </Route>
-              {/* Admin Route */}
               <Route path="/admin" element={<Admin />} />
             </Routes>
           </HashRouter>
