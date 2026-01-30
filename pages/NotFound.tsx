@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Home, ArrowLeft } from 'lucide-react';
-import Romduol from '../components/Romduol';
+import { Romduol } from '../components/Romduol';
 
 const NotFound = () => {
   useEffect(() => {
