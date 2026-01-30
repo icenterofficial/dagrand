@@ -4,8 +4,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a2138" />
+    <link rel="manifest" href="/manifest.json" />
     <title>Dagrand Law Office</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+Khmer:wght@400;700&family=Noto+Serif+Khmer:wght@400;700&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
@@ -16,7 +21,7 @@
               sans: ['Inter', 'Noto Sans Khmer', 'sans-serif'],
               serif: ['Playfair Display', 'Noto Serif Khmer', 'serif'],
               chinese: ['Noto Serif SC', 'serif'],
-              khmer: ['Noto Sans Khmer', 'sans-serif'],
+              khmer: ['"Google Sans"', 'Noto Sans Khmer', 'sans-serif'],
               'khmer-serif': ['Noto Serif Khmer', 'serif'],
             },
             colors: {
@@ -136,10 +141,8 @@
         transform-origin: 50% 50%;
       }
     </style>
-<link rel="stylesheet" href="/index.css">
 </head>
   <body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-900 selection:text-white dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300">
     <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
-</body>
+  </body>
 </html>
