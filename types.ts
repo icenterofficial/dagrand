@@ -1,5 +1,6 @@
 
-export type Language = 'en' | 'zh' | 'km';
+
+export type Language = 'en' | 'zh';
 
 export interface Lawyer {
   id: string;
@@ -9,6 +10,15 @@ export interface Lawyer {
   bio: string[];
   education: string;
   image: string;
+  contacts?: {
+      phone?: string;
+      email?: string;
+  }
+}
+
+export interface ServiceDetail {
+  title: string;
+  content: string[];
 }
 
 export interface PracticeArea {
@@ -16,7 +26,8 @@ export interface PracticeArea {
   title: string;
   shortDesc: string;
   fullDesc: string[];
-  subServices?: string[];
+  subServices?: string[]; // Keep for backward compatibility or simple lists
+  serviceDetails?: ServiceDetail[]; // For detailed service sections
   image?: string; 
 }
 
@@ -86,6 +97,11 @@ export interface SiteContent {
     title: string;
     items: TestimonialItem[];
   };
+  ctaSection: {
+    title: string;
+    subtitle: string;
+    buttonText: string;
+  };
   updates: {
     title: string;
     subtitle: string;
@@ -106,6 +122,8 @@ export interface SiteContent {
     hoursValue: string;
     phoneLabel: string;
     emailLabel: string;
+    khmerEngFr: string;
+    chinese: string;
   };
   footer: {
     rights: string;
