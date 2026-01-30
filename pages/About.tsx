@@ -1,16 +1,15 @@
 
-
 import React from 'react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../context/LanguageContext.tsx';
 
 const About = () => {
   const { content } = useLanguage();
 
   return (
     <div className="bg-white dark:bg-slate-900 min-h-screen transition-colors duration-300">
-      {/* Modern Tech Header */}
-      <div className="relative bg-brand-950 py-20 lg:py-28 overflow-hidden">
-        {/* Tech Grid Pattern - Size Reduced to 2rem */}
+      {/* Seamless Dark Header */}
+      <div className="relative bg-brand-950 pt-32 pb-20 lg:pt-44 lg:pb-28 overflow-hidden">
+        {/* Tech Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:2rem_2rem]"></div>
         
         {/* Radial Gradient Glow */}
