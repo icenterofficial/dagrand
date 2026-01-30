@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useParams, Link, Navigate } from 'react-router-dom';
@@ -83,23 +84,19 @@ const PracticeDetail = () => {
                         </p>
                     </div>
 
-                    {/* NEW: Featured Image for the Section */}
+                    {/* Featured Image for the Section - REDUCED HEIGHT */}
                     {practice.image && (
                         <div className="mb-12 relative group rounded-2xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800">
                             <img 
                                 src={practice.image} 
                                 alt={practice.title} 
-                                className="w-full h-[300px] md:h-[450px] object-cover group-hover:scale-105 transition-transform duration-1000"
+                                className="w-full h-[200px] md:h-[280px] object-cover group-hover:scale-105 transition-transform duration-1000"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                            {/* Source attribution indicator (Subtle) */}
-                            <div className="absolute bottom-4 right-4 flex items-center gap-1.5 px-3 py-1 bg-black/50 backdrop-blur-md rounded-full text-[10px] text-white/80 font-medium">
-                                <ExternalLink size={10} /> Photo via Unsplash
-                            </div>
                         </div>
                     )}
 
-                    {/* Description */}
+                    {/* Full Description */}
                     <div className="prose prose-lg text-slate-600 dark:text-slate-300 max-w-none">
                         {practice.fullDesc.map((para, i) => (
                             <p key={i} className="mb-6 leading-relaxed text-justify">
@@ -108,8 +105,31 @@ const PracticeDetail = () => {
                         ))}
                     </div>
 
-                    {/* Sub Services List */}
-                    {practice.subServices && practice.subServices.length > 0 && (
+                    {/* Rich Service Details (New Structure) */}
+                    {practice.serviceDetails && practice.serviceDetails.length > 0 && (
+                        <div className="mt-12 space-y-10">
+                            <h3 className="text-2xl font-serif font-bold text-brand-900 dark:text-white border-b-2 border-gold-500 w-fit pb-2">Key Services</h3>
+                            
+                            <div className="grid grid-cols-1 gap-8">
+                                {practice.serviceDetails.map((service, idx) => (
+                                    <div key={idx} className="bg-slate-50 dark:bg-slate-800 p-8 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-md transition-all duration-300">
+                                        <h4 className="text-xl font-bold text-brand-900 dark:text-gold-500 mb-4 flex items-start gap-3">
+                                            <div className="w-1 h-6 bg-gold-600 rounded-full mt-1 shrink-0"></div>
+                                            {service.title}
+                                        </h4>
+                                        <div className="text-slate-600 dark:text-slate-300 leading-relaxed text-justify space-y-4">
+                                            {service.content.map((p, pIdx) => (
+                                                <p key={pIdx}>{p}</p>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Legacy Sub Services List (Fallback) */}
+                    {!practice.serviceDetails && practice.subServices && practice.subServices.length > 0 && (
                         <div className="mt-12 bg-slate-50 dark:bg-slate-800 p-8 rounded-xl border border-slate-100 dark:border-slate-700 transition-colors duration-300">
                             <h3 className="text-xl font-bold text-brand-900 dark:text-white mb-6 font-serif">Scope of Services</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -124,20 +144,20 @@ const PracticeDetail = () => {
                     )}
 
                     {/* CTA Box */}
-                    <div className="mt-12 bg-brand-900 p-8 rounded-lg text-white shadow-xl relative overflow-hidden group">
+                    <div className="mt-16 bg-brand-900 p-10 rounded-lg text-white shadow-xl relative overflow-hidden group">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-gold-500 rounded-full opacity-10 -mr-20 -mt-20 group-hover:scale-110 transition-transform duration-700"></div>
                         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
                             <div>
-                                <h3 className="text-2xl font-bold mb-2 font-serif">Need Legal Advice?</h3>
+                                <h3 className="text-2xl font-bold mb-2 font-serif">Ready to proceed?</h3>
                                 <p className="text-slate-300 text-sm leading-relaxed max-w-md">
-                                    Our team is ready to assist you with tailored legal solutions for your specific requirements.
+                                    Our experts in {practice.title.toLowerCase()} are here to guide you through every step.
                                 </p>
                             </div>
                             <Link 
                                 to="/contact" 
                                 className="whitespace-nowrap bg-gold-600 py-3 px-8 rounded text-sm font-bold hover:bg-gold-500 transition-all shadow-lg uppercase tracking-wider"
                             >
-                                Contact Us Today
+                                Contact Us
                             </Link>
                         </div>
                     </div>
