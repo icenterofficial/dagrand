@@ -1,5 +1,4 @@
 
-
 export type Language = 'en' | 'zh';
 
 export interface Lawyer {
@@ -26,8 +25,8 @@ export interface PracticeArea {
   title: string;
   shortDesc: string;
   fullDesc: string[];
-  subServices?: string[]; // Keep for backward compatibility or simple lists
-  serviceDetails?: ServiceDetail[]; // For detailed service sections
+  subServices?: string[];
+  serviceDetails?: ServiceDetail[];
   image?: string; 
 }
 
