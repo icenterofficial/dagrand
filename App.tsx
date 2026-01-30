@@ -14,6 +14,7 @@ import Updates from './pages/Updates';
 import UpdateDetail from './pages/UpdateDetail';
 import Contact from './pages/Contact';
 import Admin from './pages/Admin';
+import NotFound from './pages/NotFound';
 
 // ScrollToTop component to handle scroll on navigation
 const ScrollToTop = () => {
@@ -43,6 +44,8 @@ const App = () => {
                 <Route path="updates" element={<Updates />} />
                 <Route path="updates/:id" element={<UpdateDetail />} />
                 <Route path="contact" element={<Contact />} />
+                {/* 404 Route - Must be last inside Layout to inherit nav/footer, or outside if you want a clean page */}
+                <Route path="*" element={<NotFound />} />
               </Route>
               {/* Admin Route */}
               <Route path="/admin" element={<Admin />} />
