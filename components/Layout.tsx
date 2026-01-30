@@ -1,16 +1,107 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { usePWA } from '../context/PWAContext';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { 
   Globe, Home, FileText, Users, 
   X, Moon, Sun, Type, Menu, ChevronRight,
-  Scale, MessageCircle, Info, Phone, Mail, MapPin
+  MessageCircle, Info, Phone, Mail, MapPin, Shield, Download, Smartphone
 } from 'lucide-react';
+
 import Romduol from './Romduol';
+import PWAInstallModal from './PWAInstallModal';
+
+// Dynamic Navigation Icon Component
+const NavIcon = ({ name, active, isSpecial }: { name: string, active: boolean, isSpecial?: boolean }) => {
+    // Inactive Style: Stroke Only (User requested: stroke width 1.25, round caps/joins)
+    const lineClass = "fill-none stroke-current stroke-[1.25] stroke-linecap-round stroke-linejoin-round";
+    
+    // Active Style: Filled Main Shape
+    const activeBase = "fill-current stroke-none";
+    
+    // Cutout Style: Used for details inside filled shapes (e.g., lines, dots)
+    // For Floating Button (Special): Background is Gold, Icon is White -> Cutout should match Gold BG
+    // For Standard Item: Background is White/Dark, Icon is Gold -> Cutout should match Page BG
+    const cutoutClass = isSpecial 
+        ? "stroke-gold-600 dark:stroke-gold-600 stroke-[1.5] stroke-linecap-round stroke-linejoin-round" 
+        : "stroke-white dark:stroke-slate-900 stroke-[1.5] stroke-linecap-round stroke-linejoin-round";
+
+    // Specific handling for dot strokes which act as fills when cap is round
+    const dotCutoutClass = isSpecial
+         ? "stroke-gold-600 dark:stroke-gold-600 stroke-[2] stroke-linecap-round"
+         : "stroke-white dark:stroke-slate-900 stroke-[2] stroke-linecap-round";
+
+    switch(name) {
+        case 'home':
+            return (
+                <svg viewBox="0 0 24 24" className="w-6 h-6">
+                    {/* Door Line - Cutout when active */}
+                    <path d='M12 18V15' className={active ? cutoutClass : lineClass}></path>
+                    {/* House Body - Fill when active */}
+                    <path d='M10.07 2.81997L3.14002 8.36997C2.36002 8.98997 1.86002 10.3 2.03002 11.28L3.36002 19.24C3.60002 20.66 4.96002 21.81 6.40002 21.81H17.6C19.03 21.81 20.4 20.65 20.64 19.24L21.97 11.28C22.13 10.3 21.63 8.98997 20.86 8.36997L13.93 2.82997C12.86 1.96997 11.13 1.96997 10.07 2.81997Z' className={active ? activeBase : lineClass}></path>
+                </svg>
+            );
+        case 'about':
+            return (
+                <svg viewBox="0 0 24 24" className="w-6 h-6">
+                    {/* Document Body */}
+                    <path d='M10.75 2.44995C11.45 1.85995 12.58 1.85995 13.26 2.44995L14.84 3.79995C15.14 4.04995 15.71 4.25995 16.11 4.25995H17.81C18.87 4.25995 19.74 5.12995 19.74 6.18995V7.88995C19.74 8.28995 19.95 8.84995 20.2 9.14995L21.55 10.7299C22.14 11.4299 22.14 12.5599 21.55 13.2399L20.2 14.8199C19.95 15.1199 19.74 15.6799 19.74 16.0799V17.7799C19.74 18.8399 18.87 19.7099 17.81 19.7099H16.11C15.71 19.7099 15.15 19.9199 14.85 20.1699L13.27 21.5199C12.57 22.1099 11.44 22.1099 10.76 21.5199L9.18001 20.1699C8.88001 19.9199 8.31 19.7099 7.92 19.7099H6.17C5.11 19.7099 4.24 18.8399 4.24 17.7799V16.0699C4.24 15.6799 4.04 15.1099 3.79 14.8199L2.44 13.2299C1.86 12.5399 1.86 11.4199 2.44 10.7299L3.79 9.13995C4.04 8.83995 4.24 8.27995 4.24 7.88995V6.19995C4.24 5.13995 5.11 4.26995 6.17 4.26995H7.9C8.3 4.26995 8.86 4.05995 9.16 3.80995L10.75 2.44995Z' className={active ? activeBase : lineClass}></path>
+                    {/* Exclamation Line */}
+                    <path d='M12 8.13V12.96' className={active ? cutoutClass : lineClass}></path>
+                    {/* Exclamation Dot */}
+                    <path d='M11.9945 16H12.0035' className={active ? dotCutoutClass : lineClass}></path>
+                </svg>
+            );
+        case 'team':
+            return (
+                <svg viewBox="0 0 24 24" className="w-6 h-6">
+                    {/* Left Person Body */}
+                    <path d='M9.16006 10.87C9.06006 10.86 8.94006 10.86 8.83006 10.87C6.45006 10.79 4.56006 8.84 4.56006 6.44C4.56006 3.99 6.54006 2 9.00006 2C11.4501 2 13.4401 3.99 13.4401 6.44C13.4301 8.84 11.5401 10.79 9.16006 10.87Z' className={active ? activeBase : lineClass}></path>
+                    {/* Right Person Head */}
+                    <path d='M16.41 4C18.35 4 19.91 5.57 19.91 7.5C19.91 9.39 18.41 10.93 16.54 11C16.46 10.99 16.37 10.99 16.28 11' className={active ? activeBase : lineClass}></path>
+                    {/* Left Person Body */}
+                    <path d='M4.15997 14.56C1.73997 16.18 1.73997 18.82 4.15997 20.43C6.90997 22.27 11.42 22.27 14.17 20.43C16.59 18.81 16.59 16.17 14.17 14.56C11.43 12.73 6.91997 12.73 4.15997 14.56Z' className={active ? activeBase : lineClass}></path>
+                    {/* Right Person Body */}
+                    <path d='M18.3401 20C19.0601 19.85 19.7401 19.56 20.3001 19.13C21.8601 17.96 21.8601 16.03 20.3001 14.86C19.7501 14.44 19.0801 14.16 18.3701 14' className={active ? (isSpecial ? "stroke-white dark:stroke-slate-900 stroke-[1.5] fill-none" : "stroke-gold-600 stroke-[1.5] fill-none") : lineClass}></path>
+                </svg>
+            );
+        case 'contact':
+             return (
+                <svg viewBox="0 0 24 24" className="w-6 h-6">
+                    {/* Main Bubble */}
+                    <path d='M17.98 10.79V14.79C17.98 15.05 17.97 15.3 17.94 15.54C17.71 18.24 16.12 19.58 13.19 19.58H12.79C12.54 19.58 12.3 19.7 12.15 19.9L10.95 21.5C10.42 22.21 9.56 22.21 9.03 21.5L7.82999 19.9C7.69999 19.73 7.41 19.58 7.19 19.58H6.79001C3.60001 19.58 2 18.79 2 14.79V10.79C2 7.86001 3.35001 6.27001 6.04001 6.04001C6.28001 6.01001 6.53001 6 6.79001 6H13.19C16.38 6 17.98 7.60001 17.98 10.79Z' strokeMiterlimit='10' className={active ? activeBase : lineClass}></path>
+                    {/* Secondary Bubble */}
+                    <path d='M21.98 6.79001V10.79C21.98 13.73 20.63 15.31 17.94 15.54C17.97 15.3 17.98 15.05 17.98 14.79V10.79C17.98 7.60001 16.38 6 13.19 6H6.79004C6.53004 6 6.28004 6.01001 6.04004 6.04001C6.27004 3.35001 7.86004 2 10.79 2H17.19C20.38 2 21.98 3.60001 21.98 6.79001Z' strokeMiterlimit='10' className={active ? (activeBase + " opacity-50") : lineClass}></path>
+                    {/* Dots */}
+                    <path d='M13.4955 13.25H13.5045' className={active ? dotCutoutClass : lineClass}></path>
+                    <path d='M9.9955 13.25H10.0045' className={active ? dotCutoutClass : lineClass}></path>
+                    <path d='M6.4955 13.25H6.5045' className={active ? dotCutoutClass : lineClass}></path>
+                </svg>
+             );
+        case 'practices':
+             return (
+                <svg viewBox="0 0 24 24" className="w-6 h-6">
+                    {/* Rod - Line (Always Stroke) */}
+                    <path d="M12 3v18" className={lineClass}></path>
+                    {/* Right Pan - Shape (Fill when active) */}
+                    <path d="m19 8 3 8a5 5 0 0 1-6 0zV7" className={active ? activeBase : lineClass}></path>
+                    {/* Beam - Line (Always Stroke) */}
+                    <path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1" className={lineClass}></path>
+                    {/* Left Pan - Shape (Fill when active) */}
+                    <path d="m5 8 3 8a5 5 0 0 1-6 0zV7" className={active ? activeBase : lineClass}></path>
+                    {/* Base - Line (Always Stroke) */}
+                    <path d="M7 21h10" className={lineClass}></path>
+                </svg>
+             );
+        default:
+            return null;
+    }
+}
 
 const Layout = () => {
   const { content, language, setLanguage } = useLanguage();
+  const { isInstallable, installApp } = usePWA();
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -65,8 +156,49 @@ const Layout = () => {
     }
   }, [darkMode]);
 
+  // Updated Font Size Logic: Affects ONLY text classes, not layout
   useEffect(() => {
-    document.documentElement.style.fontSize = `${fontSize}%`;
+    // 1. Reset root font size to avoid layout breakage (just in case it was set previously)
+    document.documentElement.style.removeProperty('font-size');
+
+    // 2. Calculate the multiplier
+    const scale = fontSize / 100;
+
+    // 3. Define Tailwind text class base sizes (in rem)
+    const sizes: {[key: string]: number} = {
+      '.text-xs': 0.75,
+      '.text-sm': 0.875,
+      '.text-base': 1,
+      '.text-lg': 1.125,
+      '.text-xl': 1.25,
+      '.text-2xl': 1.5,
+      '.text-3xl': 1.875,
+      '.text-4xl': 2.25,
+      '.text-5xl': 3,
+      '.text-6xl': 3.75,
+      '.text-7xl': 4.5
+    };
+
+    let styleContent = '';
+
+    // 4. Generate CSS overrides
+    Object.entries(sizes).forEach(([selector, rem]) => {
+       const newRem = rem * scale;
+       // Use relative line-height to ensure text doesn't overlap when scaled, 
+       // but strictly avoid changing container dimensions derived from 'rem'
+       const lineHeight = rem > 1.5 ? '1.2' : '1.6'; 
+       styleContent += `${selector} { font-size: ${newRem}rem !important; line-height: ${lineHeight} !important; } `;
+    });
+
+    // 5. Inject styles
+    let styleTag = document.getElementById('text-scaler-style');
+    if (!styleTag) {
+      styleTag = document.createElement('style');
+      styleTag.id = 'text-scaler-style';
+      document.head.appendChild(styleTag);
+    }
+    styleTag.innerHTML = styleContent;
+
   }, [fontSize]);
 
   const isActive = (path: string) => {
@@ -88,12 +220,13 @@ const Layout = () => {
     { name: content.nav.contact, path: '/contact' },
   ];
 
+  // Configuration for Bottom Nav
   const bottomNavLinks = [
-    { label: content.nav.home, path: '/', icon: <Home size={18} /> },
-    { label: content.nav.about, path: '/about', icon: <Info size={18} /> },
-    { label: content.nav.practices, path: '/practices', icon: <Scale size={20} />, special: true },
-    { label: content.nav.team, path: '/team', icon: <Users size={18} /> },
-    { label: content.nav.contact, path: '/contact', icon: <MessageCircle size={18} /> },
+    { label: "Home", path: '/', icon: 'home' },
+    { label: "About", path: '/about', icon: 'about' },
+    { label: "Practice", path: '/practices', icon: 'practices', special: true },
+    { label: "Team", path: '/team', icon: 'team' },
+    { label: "Contact", path: '/contact', icon: 'contact' },
   ];
 
   const getLangLabel = (l: string) => {
@@ -111,6 +244,9 @@ const Layout = () => {
   return (
     <div className={`min-h-screen flex flex-col font-sans transition-colors duration-300 ${darkMode ? 'dark' : ''}`}>
       
+      {/* PWA Install Modal */}
+      <PWAInstallModal />
+
       {/* Progress Bar */}
       <div className="fixed top-0 left-0 w-full h-[3px] bg-transparent z-[100] pointer-events-none hidden lg:block">
         <div 
@@ -137,6 +273,44 @@ const Layout = () => {
             </div>
 
             <div className="space-y-6">
+                
+                {/* PWA Install Button (Only if installable) */}
+                {isInstallable && (
+                    <div className="bg-brand-50 dark:bg-brand-900/30 p-4 rounded-xl border border-brand-100 dark:border-brand-800/50">
+                        <div className="flex items-start gap-3 mb-3">
+                            <div className="w-10 h-10 bg-gold-600 rounded-lg flex items-center justify-center text-white shrink-0">
+                                <Smartphone size={20} />
+                            </div>
+                            <div>
+                                <h4 className="font-bold text-brand-900 dark:text-white text-sm">Install App</h4>
+                                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Add to home screen for faster access.</p>
+                            </div>
+                        </div>
+                        <button 
+                            onClick={() => { installApp(); setIsSettingsOpen(false); }}
+                            className="w-full bg-brand-900 dark:bg-white text-white dark:text-brand-900 font-bold text-sm py-2 rounded-lg hover:bg-gold-600 dark:hover:bg-gold-400 transition-colors shadow-sm"
+                        >
+                            Install Now
+                        </button>
+                    </div>
+                )}
+
+                {/* Mobile Only: Navigation Items not in Bottom Nav */}
+                <div className="lg:hidden space-y-3">
+                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Menu</label>
+                    <Link 
+                        to="/updates"
+                        onClick={() => setIsSettingsOpen(false)}
+                        className="w-full flex items-center justify-between p-4 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:border-gold-500 transition-all"
+                    >
+                        <div className="flex items-center gap-3">
+                            <FileText size={20} className="text-gold-600" />
+                            <span className="font-medium text-slate-700 dark:text-slate-200">{content.nav.updates}</span>
+                        </div>
+                        <ChevronRight size={16} className="text-slate-300" />
+                    </Link>
+                </div>
+
                 <div className="space-y-3">
                     <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Language</label>
                     <button 
@@ -161,14 +335,29 @@ const Layout = () => {
 
                 <div className="space-y-3">
                     <div className="flex justify-between items-center px-1">
-                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Font Size</label>
-                        <span className="px-2 py-0.5 bg-gold-50 dark:bg-gold-500/10 text-[10px] font-black text-gold-600 rounded">{fontSize}%</span>
+                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Font Size</label>
+                        <span className="px-2 py-0.5 bg-gold-50 dark:bg-gold-500/10 text-[10px] font-bold text-gold-600 rounded">{fontSize}%</span>
                     </div>
                     <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800/50 flex items-center gap-4">
                         <button onClick={() => setFontSize(Math.max(85, fontSize - 5))} className="text-slate-400 hover:text-gold-600"><Type size={14} strokeWidth={3} /></button>
                         <input type="range" min="85" max="125" step="5" value={fontSize} onChange={(e) => setFontSize(parseInt(e.target.value))} className="flex-1 h-1 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-gold-600" />
                         <button onClick={() => setFontSize(Math.min(125, fontSize + 5))} className="text-slate-400 hover:text-gold-600"><Type size={22} strokeWidth={2} /></button>
                     </div>
+                </div>
+
+                {/* Admin Portal Link */}
+                <div className="pt-6 border-t border-slate-100 dark:border-slate-800">
+                    <Link 
+                        to="/admin"
+                        onClick={() => setIsSettingsOpen(false)}
+                        className="flex items-center justify-between p-4 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 hover:border-brand-900 transition-all group"
+                    >
+                        <div className="flex items-center gap-3">
+                            <Shield size={20} className="text-slate-400 group-hover:text-brand-900 dark:group-hover:text-white" />
+                            <span className="font-medium text-slate-500 group-hover:text-brand-900 dark:text-slate-400 dark:group-hover:text-white">Admin Portal</span>
+                        </div>
+                        <ChevronRight size={16} className="text-slate-300" />
+                    </Link>
                 </div>
             </div>
         </div>
@@ -247,35 +436,44 @@ const Layout = () => {
         <Outlet />
       </main>
 
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-slate-100 dark:border-slate-800 z-[90] lg:hidden safe-bottom">
-        <div className="grid grid-cols-5 h-[65px] items-center">
+      {/* Redesigned Mobile Bottom Navigation (Inline SVG Version) */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 z-[90] lg:hidden safe-bottom">
+        <div className="grid grid-cols-5 h-[65px] items-center pb-1">
             {bottomNavLinks.map((link, idx) => {
                 const active = isActive(link.path);
+                
                 return (
                     <Link 
                         key={idx}
                         to={link.path}
-                        className={`flex flex-col items-center justify-center transition-all ${link.special ? '-translate-y-2' : ''} ${active ? 'text-gold-600' : 'text-slate-400 dark:text-slate-500'}`}
+                        className={`group flex flex-col items-center justify-center h-full transition-all relative ${link.special ? '-translate-y-5' : ''}`}
                     >
-                        <div className={`
-                            relative flex items-center justify-center transition-all duration-500
-                            ${link.special 
-                                ? `w-11 h-11 shadow-lg rounded-full ring-2 transition-all duration-300 ${active ? 'bg-gold-600 ring-gold-500 shadow-gold-500/20 scale-110' : 'bg-brand-900 dark:bg-slate-800 ring-white dark:ring-slate-900'}` 
-                                : 'p-2'
-                            }
-                            ${active && !link.special ? 'bg-gold-50 dark:bg-gold-500/10 text-gold-600 rounded-lg' : ''}
-                        `}>
-                            {link.special && (
-                                <svg className="absolute inset-0 w-full h-full p-0 pointer-events-none -rotate-90" viewBox="0 0 40 40">
-                                    <circle className={active ? "text-white/20" : "text-white/10"} strokeWidth="3" stroke="currentColor" fill="transparent" r={radius} cx="20" cy="20" />
-                                    <circle className={active ? "text-white" : "text-gold-500"} strokeWidth="3" strokeDasharray={circumference} strokeDashoffset={circumference - (scrollProgress / 100) * circumference} strokeLinecap="round" stroke="currentColor" fill="transparent" r={radius} cx="20" cy="20" style={{ transition: 'stroke-dashoffset 0.1s linear' }} />
+                        {link.special ? (
+                            /* Floating Action Button (Center) - Scales */
+                            <div className={`
+                                relative w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all duration-300
+                                ${active ? 'bg-gold-600 shadow-gold-500/40 ring-4 ring-white dark:ring-slate-900 scale-105' : 'bg-brand-900 dark:bg-slate-800 ring-4 ring-white dark:ring-slate-900'}
+                            `}>
+                                {/* Progress Ring SVG */}
+                                <svg className="absolute inset-0 w-full h-full p-0 pointer-events-none -rotate-90 scale-110" viewBox="0 0 40 40">
+                                    <circle className="text-transparent" strokeWidth="2" stroke="currentColor" fill="transparent" r={radius} cx="20" cy="20" />
+                                    {active && <circle className="text-white/30" strokeWidth="2" strokeDasharray={circumference} strokeDashoffset={circumference - (scrollProgress / 100) * circumference} strokeLinecap="round" stroke="currentColor" fill="transparent" r={radius} cx="20" cy="20" style={{ transition: 'stroke-dashoffset 0.1s linear' }} />}
                                 </svg>
-                            )}
-                            <div className={`${link.special ? (active ? 'text-white' : 'text-gold-500') : ''}`}>
-                                {link.icon}
+                                
+                                <div className={`${active ? 'text-white' : 'text-gold-500'}`}>
+                                   <NavIcon name={link.icon} active={active} isSpecial={true} />
+                                </div>
                             </div>
-                        </div>
-                        <span className={`text-[8px] font-bold uppercase tracking-tight mt-1 ${link.special ? (active ? 'text-gold-600 font-black' : 'text-brand-900 dark:text-gold-500') : ''}`}>
+                        ) : (
+                            /* Standard Nav Item */
+                            <>
+                                <div className={`transition-all duration-300 mb-0.5 ${active ? 'text-gold-600' : 'text-slate-400 dark:text-slate-500'}`}>
+                                    <NavIcon name={link.icon} active={active} />
+                                </div>
+                            </>
+                        )}
+                        
+                        <span className={`text-[10px] font-bold uppercase tracking-tight transition-all duration-300 ${active ? 'text-gold-600' : 'text-slate-400 dark:text-slate-500'}`}>
                             {link.label}
                         </span>
                     </Link>
@@ -344,4 +542,3 @@ const Layout = () => {
 };
 
 export default Layout;
-
