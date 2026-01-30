@@ -11,6 +11,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'Noto Sans Khmer', 'sans-serif'],
         serif: ['Playfair Display', 'Noto Serif Khmer', 'serif'],
+        moul: ['Moul', 'serif'],
         chinese: ['Noto Serif SC', 'serif'],
         khmer: ['"Google Sans"', 'Noto Sans Khmer', 'sans-serif'],
         'khmer-serif': ['Noto Serif Khmer', 'serif'],
