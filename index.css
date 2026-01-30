@@ -3,61 +3,47 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: 'Inter', 'Noto Sans Khmer', sans-serif;
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply selection:bg-gold-500 selection:text-white;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    @apply font-serif;
+  }
 }
-.font-serif {
-  font-family: 'Playfair Display', 'Noto Serif Khmer', serif;
-}
-.glass-nav {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-.dark .glass-nav {
-  background: rgba(15, 23, 42, 0.85);
-}
+
 .safe-bottom {
   padding-bottom: env(safe-area-inset-bottom);
 }
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
-.dark ::-webkit-scrollbar-track {
-  background: #0f172a; 
-}
-::-webkit-scrollbar-thumb {
-  background: #cc9933; 
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #a67324; 
-}
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  background: #cc9933;
-  cursor: pointer;
-  box-shadow: 0 4px 6px -1px rgba(204, 153, 51, 0.4), 0 2px 4px -1px rgba(204, 153, 51, 0.2);
-  border: 3px solid #fff;
-  margin-top: -8px;
-  transition: all 0.2s ease;
-}
-.dark input[type=range]::-webkit-slider-thumb {
-  border: 3px solid #1e293b;
-}
-input[type=range]::-webkit-slider-thumb:active {
-  transform: scale(1.15);
-  box-shadow: 0 0 0 8px rgba(204, 153, 51, 0.15);
+
+.glass-header {
+  @apply bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800;
 }
 
-.progress-ring__circle {
-  transition: stroke-dashoffset 0.1s linear;
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
+.scrollbar-left {
+  scrollbar-gutter: stable;
+}
+
+/* For browsers that don't support direction hack perfectly */
+.scrollbar-left::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-left::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.scrollbar-left::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 dark:bg-slate-700 rounded-full;
+}
+
+/* Custom transitions */
+.page-transition {
+  @apply transition-all duration-500 ease-in-out;
 }
