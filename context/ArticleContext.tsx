@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { Article } from '../types';
 import { articles as initialArticles } from '../data/articles';
@@ -5,6 +6,7 @@ import { articles as initialArticles } from '../data/articles';
 interface ArticleContextType {
   articles: Article[];
   addArticle: (article: Article) => void;
+  updateArticle: (article: Article) => void;
   deleteArticle: (id: string) => void;
 }
 
@@ -18,12 +20,16 @@ export const ArticleProvider: React.FC<{ children: ReactNode }> = ({ children })
     setArticles(prev => [article, ...prev]);
   };
 
+  const updateArticle = (updatedArticle: Article) => {
+    setArticles(prev => prev.map(item => item.id === updatedArticle.id ? updatedArticle : item));
+  };
+
   const deleteArticle = (id: string) => {
     setArticles(prev => prev.filter(a => a.id !== id));
   };
 
   return (
-    <ArticleContext.Provider value={{ articles, addArticle, deleteArticle }}>
+    <ArticleContext.Provider value={{ articles, addArticle, updateArticle, deleteArticle }}>
       {children}
     </ArticleContext.Provider>
   );
