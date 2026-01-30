@@ -1,17 +1,15 @@
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-// Define User Type
 export interface User {
   id: string;
   name: string;
   email: string;
   role: 'admin' | 'editor';
   avatar: string;
-  password?: string; // In a real app, never store plain text passwords!
+  password?: string;
 }
 
-// Initial Mock Users
 const INITIAL_USERS: User[] = [
   {
     id: 'u1',
@@ -33,7 +31,7 @@ const INITIAL_USERS: User[] = [
 
 interface AuthContextType {
   user: User | null;
-  users: User[]; // Expose list of users for Admin
+  users: User[];
   login: (email: string, pass: string) => boolean;
   logout: () => void;
   addUser: (newUser: User) => void;
@@ -44,13 +42,30 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [users, setUsers] = useState<User[]>(INITIAL_USERS);
+  const [users, setUsers] = useState<User[]>(() => {
+    const saved = localStorage.getItem('dagrand_users');
+    return saved ? JSON.parse(saved) : INITIAL_USERS;
+  });
+
+  const [user, setUser] = useState<User | null>(() => {
+    const saved = localStorage.getItem('dagrand_session');
+    return saved ? JSON.parse(saved) : null;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('dagrand_users', JSON.stringify(users));
+  }, [users]);
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('dagrand_session', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('dagrand_session');
+    }
+  }, [user]);
 
   const login = (email: string, pass: string): boolean => {
-    // Check against the dynamic users state
     const foundUser = users.find(u => u.email === email && u.password === pass);
-    
     if (foundUser) {
       setUser(foundUser);
       return true;
