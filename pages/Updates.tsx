@@ -1,19 +1,27 @@
 
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useArticles } from '../context/ArticleContext';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Calendar, User, ArrowRight, Tag } from 'lucide-react';
 import Romduol from '../components/Romduol';
 
 const Updates = () => {
   const { content } = useLanguage();
   const { articles } = useArticles();
-  const [filter, setFilter] = useState('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+  
+  // Get filter from URL or default to 'all'
+  const currentFilter = searchParams.get('category') || 'all';
 
-  const filteredArticles = filter === 'all' 
+  const handleFilterChange = (category: string) => {
+      setSearchParams({ category });
+  };
+
+  const filteredArticles = currentFilter === 'all' 
     ? articles 
-    : articles.filter(article => article.category === filter);
+    : articles.filter(article => article.category === currentFilter);
 
   const getCategoryName = (catKey: string) => {
     // @ts-ignore
@@ -21,12 +29,19 @@ const Updates = () => {
   };
 
   return (
-    <div className="bg-slate-50 dark:bg-slate-950 min-h-screen transition-colors duration-300 pt-20 lg:pt-24">
-      {/* Header */}
-      <div className="bg-brand-900 dark:bg-slate-900 py-20 text-white relative overflow-hidden">
-        <Romduol className="absolute -top-10 -right-10 w-64 h-64 text-white/5 rotate-12" />
+    <div className="bg-slate-50 dark:bg-slate-950 min-h-screen transition-colors duration-300">
+      {/* Modern Tech Header */}
+      <div className="relative bg-brand-950 py-20 lg:py-28 overflow-hidden">
+        {/* Subtle Tech Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:2rem_2rem]"></div>
+        
+        <Romduol className="absolute -top-20 -right-20 w-96 h-96 text-white/5 rotate-12 animate-pulse-slow" />
+        
+        {/* Glowing orb effect */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-brand-600/20 blur-[120px] rounded-full"></div>
+
         <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold animate-fade-in-up">{content.updates.title}</h1>
+            <h1 className="text-4xl md:text-5xl font-serif font-bold text-white animate-fade-in-up">{content.updates.title}</h1>
             <p className="mt-4 text-slate-300 max-w-2xl mx-auto animate-fade-in-up delay-100 font-light text-lg">{content.updates.subtitle}</p>
         </div>
       </div>
@@ -38,9 +53,9 @@ const Updates = () => {
             {Object.entries(content.updates.categories).map(([key, label]) => (
                 <button
                     key={key}
-                    onClick={() => setFilter(key)}
+                    onClick={() => handleFilterChange(key)}
                     className={`px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-300 ${
-                        filter === key 
+                        currentFilter === key 
                         ? 'bg-gold-600 text-white shadow-lg transform scale-105' 
                         : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-gold-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
                     }`}
@@ -101,6 +116,12 @@ const Updates = () => {
         {filteredArticles.length === 0 && (
             <div className="text-center py-20">
                 <p className="text-slate-500 dark:text-slate-400 text-lg">No updates found in this category.</p>
+                <button 
+                    onClick={() => handleFilterChange('all')}
+                    className="mt-4 text-gold-600 font-bold hover:underline"
+                >
+                    View All Updates
+                </button>
             </div>
         )}
       </div>
