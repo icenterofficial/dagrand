@@ -1,0 +1,21 @@
+
+{
+  "short_name": "Dagrand Law",
+  "name": "Dagrand Law Office",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/9285/9285376.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/9285/9285376.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0a2138",
+  "background_color": "#ffffff"
+}
