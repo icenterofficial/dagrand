@@ -54,7 +54,7 @@ const Home = () => {
   const partners = content.team.members.slice(0, 2);
 
   return (
-    <div className="flex flex-col w-full overflow-hidden bg-white dark:bg-slate-900 transition-colors duration-300">
+    <div className="flex flex-col w-full overflow-hidden bg-brand-950 transition-colors duration-300">
       {/* Hero Section - Luxury Style */}
       <section className="relative h-screen min-h-[600px] flex items-center justify-start overflow-hidden">
         {/* Background Image with absolute positioning to cover top */}
@@ -107,27 +107,29 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Statistics Bar */}
-      <div className="relative z-20 -mt-20 lg:-mt-24 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
-         <div className="bg-brand-900 dark:bg-slate-800 rounded-lg shadow-2xl py-10 md:py-14 border-b-4 border-gold-500 animate-fade-in delay-200 transition-colors duration-300 relative overflow-hidden flex flex-wrap md:flex-nowrap justify-around items-center">
-             <Romduol className="absolute -top-10 -right-10 w-48 h-48 text-gold-500/10 opacity-20 rotate-12" />
-             
-             {content.stats.map((stat, idx) => (
-                 <React.Fragment key={idx}>
-                    <div className="flex-1 min-w-[150px] text-center px-4 relative z-10 py-4 md:py-0">
-                        <div className="text-3xl lg:text-5xl font-extrabold text-gold-500 mb-2 font-sans tracking-tighter">
-                            {stat.value}
-                        </div>
-                        <div className="text-slate-300 text-[9px] lg:text-[11px] uppercase tracking-[0.25em] font-black opacity-80 leading-relaxed">
-                            {stat.label}
-                        </div>
-                    </div>
-                    {idx < content.stats.length - 1 && (
-                        <div className="hidden md:block h-16 w-px bg-white/10 dark:bg-slate-600 self-center mx-2"></div>
-                    )}
-                 </React.Fragment>
-             ))}
-         </div>
+      {/* Statistics Bar Wrapper - Now matches brand-950 background */}
+      <div className="relative bg-brand-950">
+        <div className="relative z-20 -mt-20 lg:-mt-24 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 w-full">
+           <div className="bg-brand-900 dark:bg-slate-800 rounded-lg shadow-2xl py-10 md:py-14 border-b-4 border-gold-500 animate-fade-in delay-200 transition-colors duration-300 relative overflow-hidden flex flex-wrap md:flex-nowrap justify-around items-center">
+               <Romduol className="absolute -top-10 -right-10 w-48 h-48 text-gold-500/10 opacity-20 rotate-12" />
+               
+               {content.stats.map((stat, idx) => (
+                   <React.Fragment key={idx}>
+                      <div className="flex-1 min-w-[150px] text-center px-4 relative z-10 py-4 md:py-0">
+                          <div className="text-3xl lg:text-5xl font-extrabold text-gold-500 mb-2 font-sans tracking-tighter">
+                              {stat.value}
+                          </div>
+                          <div className="text-slate-300 text-[9px] lg:text-[11px] uppercase tracking-[0.25em] font-black opacity-80 leading-relaxed">
+                              {stat.label}
+                          </div>
+                      </div>
+                      {idx < content.stats.length - 1 && (
+                          <div className="hidden md:block h-16 w-px bg-white/10 dark:bg-slate-600 self-center mx-2"></div>
+                      )}
+                   </React.Fragment>
+               ))}
+           </div>
+        </div>
       </div>
 
       {/* Practice Areas Summary */}
