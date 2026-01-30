@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -6,11 +7,20 @@ const About = () => {
   const { content } = useLanguage();
 
   return (
-    <div className="bg-white dark:bg-slate-900 min-h-screen transition-colors duration-300 pt-20 lg:pt-24">
-      {/* Header */}
-      <div className="bg-brand-50 dark:bg-brand-950 py-16 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-            <h1 className="text-4xl font-serif font-bold text-brand-900 dark:text-white">{content.nav.about}</h1>
+    <div className="bg-white dark:bg-slate-900 min-h-screen transition-colors duration-300">
+      {/* Modern Tech Header */}
+      <div className="relative bg-brand-950 py-20 lg:py-28 overflow-hidden">
+        {/* Tech Grid Pattern - Size Reduced to 2rem */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:2rem_2rem]"></div>
+        
+        {/* Radial Gradient Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-4xl bg-[radial-gradient(circle_500px_at_50%_-100px,#cc993333,transparent)]"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
+            <h1 className="text-4xl md:text-5xl font-serif font-bold text-white tracking-tight animate-fade-in-up">
+              {content.nav.about}
+            </h1>
+            <div className="h-1 w-20 bg-gold-500 mx-auto mt-6 rounded-full animate-fade-in-up delay-100"></div>
         </div>
       </div>
 
