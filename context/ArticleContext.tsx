@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Article } from '../types';
 import { articles as initialArticles } from '../data/articles';
 
@@ -13,8 +13,14 @@ interface ArticleContextType {
 const ArticleContext = createContext<ArticleContextType | undefined>(undefined);
 
 export const ArticleProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // Initialize with the dummy data
-  const [articles, setArticles] = useState<Article[]>(initialArticles);
+  const [articles, setArticles] = useState<Article[]>(() => {
+    const saved = localStorage.getItem('dagrand_articles');
+    return saved ? JSON.parse(saved) : initialArticles;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('dagrand_articles', JSON.stringify(articles));
+  }, [articles]);
 
   const addArticle = (article: Article) => {
     setArticles(prev => [article, ...prev]);
