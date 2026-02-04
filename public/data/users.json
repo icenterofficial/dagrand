@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "name": "Mr. CHAN Sokyana",
+      "email": "soky@dagrand.net",
+      "role": "admin",
+      "avatar": "https://ui-avatars.com/api/?name=Soky&background=b49b67&color=fff",
+      "password": "123"
+    },
+    {
+      "id": "u2",
+      "name": "Mr. FU Tianxin",
+      "email": "tianxin@dagrand.net",
+      "role": "editor",
+      "avatar": "https://ui-avatars.com/api/?name=Tianxin&background=153c63&color=fff",
+      "password": "123"
+    }
+  ]
+}

@@ -7,6 +7,10 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+<<<<<<< HEAD
+=======
+# node_modules
+>>>>>>> f577f38 (first commit)
 node_modules
 dist
 dist-ssr
@@ -18,7 +22,21 @@ dist-ssr
 .idea
 .DS_Store
 *.suo
+<<<<<<< HEAD
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+=======
+*.ntvs
+*.njsproj
+*.sln
+*.sw?
+
+# Environment Variables (IMPORTANT SECURITY)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+>>>>>>> f577f38 (first commit)

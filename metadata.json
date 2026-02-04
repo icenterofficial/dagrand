@@ -1,5 +1,9 @@
 {
   "name": "Dagrand Law Office",
+<<<<<<< HEAD
   "description": "Professional bilingual law firm website for Dagrand Law Office based in Cambodia.",
+=======
+  "description": "A professional, boutique law firm website for Dagrand Law Office based in Cambodia, featuring practice areas, team profiles, and legal updates.",
+>>>>>>> f577f38 (first commit)
   "requestFramePermissions": []
 }
