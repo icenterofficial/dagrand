@@ -1,65 +1,43 @@
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
-    "./components/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./context/**/*.{js,ts,jsx,tsx}",
-    "./App.tsx",
-    "./index.tsx"
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: 'class',
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['Inter', 'Noto Sans Khmer', 'sans-serif'],
-        serif: ['Playfair Display', 'Noto Serif Khmer', 'serif'],
-        moul: ['Moul', 'serif'],
-        chinese: ['Noto Serif SC', 'serif'],
-        khmer: ['"Google Sans"', 'Noto Sans Khmer', 'sans-serif'],
-        'khmer-serif': ['Noto Serif Khmer', 'serif'],
-      },
       colors: {
         brand: {
-          50: '#f0f4f8',
-          100: '#d9e2ec',
-          200: '#bcccdc',
-          300: '#9fb3c8',
-          400: '#829ab1',
-          500: '#627d98',
-          600: '#486581',
-          700: '#334e68',
-          800: '#243b53',
-          900: '#153c63',
-          950: '#0a2138',
-        },
-        gold: {
-          50: '#fbf7eb',
-          100: '#f5ecd1',
-          200: '#eddca8',
-          300: '#e3c577',
-          400: '#dab85b',
-          500: '#cc9933',
-          600: '#a67324',
-          700: '#855620',
-          800: '#6d4520',
-          900: '#5a3a1f',
+          navy: '#153c63',
+          gold: '#b49b67',
+          goldLight: '#dcc69a',
+          gray: '#f4f6f8',
+          dark: '#0f2b4a'
         }
       },
+      fontFamily: {
+        serif: ['"Playfair Display"', 'serif'],
+        sans: ['"Lato"', 'sans-serif'],
+        moul: ['"Moul"', 'serif'],
+      },
       animation: {
-        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
-        'fade-in': 'fadeIn 1s ease-out forwards',
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'shimmer': 'shimmer 8s linear infinite',
+        'float': 'float 6s ease-in-out infinite',
+        'shine-sweep': 'shine 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite',
       },
       keyframes: {
-        fadeInUp: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
+        shimmer: {
+          '0%': { backgroundPosition: '0% 50%' },
+          '100%': { backgroundPosition: '200% 50%' },
         },
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+        shine: {
+          '0%': { left: '-100%' },
+          '100%': { left: '100%' }
         }
       }
     }
