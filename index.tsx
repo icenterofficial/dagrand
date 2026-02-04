@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
-import { PWAProvider } from './context/PWAContext.tsx';
-=======
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { LanguageProvider } from './src/contexts/LanguageContext';
@@ -65,36 +58,12 @@ class ErrorBoundary extends React.Component<{children: React.ReactNode}, {hasErr
     return this.props.children;
   }
 }
->>>>>>> f577f38 (first commit)
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
   throw new Error("Could not find root element to mount to");
 }
 
-<<<<<<< HEAD
-const root = createRoot(rootElement);
-root.render(
-  <React.StrictMode>
-    <PWAProvider>
-        <App />
-    </PWAProvider>
-  </React.StrictMode>
-);
-
-// Register Service Worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(registration => {
-        console.log('SW registered: ', registration);
-      })
-      .catch(registrationError => {
-        console.log('SW registration failed: ', registrationError);
-      });
-  });
-}
-=======
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
@@ -109,4 +78,3 @@ root.render(
     </ErrorBoundary>
   </React.StrictMode>
 );
->>>>>>> f577f38 (first commit)

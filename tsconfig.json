@@ -18,8 +18,4 @@
   },
   "include": ["src", "App.tsx", "constants.ts", "index.tsx", "types.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f577f38 (first commit)

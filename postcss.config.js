@@ -3,8 +3,4 @@ export default {
     tailwindcss: {},
     autoprefixer: {},
   },
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f577f38 (first commit)

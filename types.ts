@@ -47,8 +47,4 @@ export interface LegalUpdate {
   image: string;
   authorId?: string; // Legacy ID tracking
   author?: AuthorProfile; // New rich author object for display
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f577f38 (first commit)

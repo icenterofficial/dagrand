@@ -43,8 +43,4 @@ export default {
     }
   },
   plugins: [],
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f577f38 (first commit)

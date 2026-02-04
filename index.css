@@ -1,57 +1,7 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> f577f38 (first commit)
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-<<<<<<< HEAD
-@layer base {
-  html {
-    -webkit-tap-highlight-color: transparent;
-    scroll-behavior: smooth;
-  }
-  
-  body {
-    @apply selection:bg-gold-500 selection:text-white;
-  }
-
-  h1, h2, h3, h4, .font-serif {
-    @apply font-serif;
-  }
-}
-
-.safe-bottom {
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-.glass-header {
-  @apply bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800;
-}
-
-.scrollbar-left {
-  scrollbar-gutter: stable;
-}
-
-/* For browsers that don't support direction hack perfectly */
-.scrollbar-left::-webkit-scrollbar {
-  width: 6px;
-}
-
-.scrollbar-left::-webkit-scrollbar-track {
-  @apply bg-transparent;
-}
-
-.scrollbar-left::-webkit-scrollbar-thumb {
-  @apply bg-slate-200 dark:bg-slate-700 rounded-full;
-}
-
-/* Custom transitions */
-.page-transition {
-  @apply transition-all duration-500 ease-in-out;
-}
-=======
 html { scroll-behavior: smooth; }
 body { font-family: 'Lato', sans-serif; color: #334155; }
 h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; }
@@ -99,4 +49,3 @@ body.fs-xl .prose p {
 ::-webkit-scrollbar-thumb:hover {
   background: #153c63; 
 }
->>>>>>> f577f38 (first commit)
