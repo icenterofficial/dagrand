@@ -1,14 +1,7 @@
-import React from 'react';
-import LanguageSwitcher from '../LanguageSwitcher'; // Ensure path is correct
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Layout = () => {
-  return (
-    <nav>
-      <div className="logo">Logo</div>
-      <LanguageSwitcher /> {/* LanguageSwitcher component imported and added here */}
-      <button className="settings-button">Settings</button>
-    </nav>
-  );
+    // Layout implementation
 };
 
 export default Layout;
